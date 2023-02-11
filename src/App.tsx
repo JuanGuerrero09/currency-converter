@@ -1,27 +1,31 @@
 import { useEffect, useState } from "react";
-import reactLogo from "./assets/react.svg";
 import "./App.css";
 import { CurrencyHolder } from "./components/CurrencyHolder";
+import { adjustValue } from "./services/adjustValues";
+
 
 
 function App() {
   
-  const [activeInput, setActiveInput] = useState<string | null>(null)
-  const [activeValue, setActiveValue] = useState<number | null>(null)
+
+  const [activeCurrency, setActiveCurrency] = useState<string>('USD')
+  const [activeValue, setActiveValue] = useState<number>(1)
   
   const handleChange = (event:React.ChangeEvent<HTMLInputElement>) => {
-    const currentElement = event.target.getAttribute('name')
-    const currentValue = parseFloat(event.target.value)
-    setActiveInput(currentElement)
+    const currentValue = adjustValue(event.target.value)
     setActiveValue(currentValue)
-    console.log(activeInput, activeValue)
-
-    useEffect
-
   }
   
   const handleSelect = (e:React.ChangeEvent<HTMLSelectElement>) =>{ 
+    const optionSelected = e.target.value
+    setActiveCurrency(optionSelected)
+  }
 
+  const handleFocus = (event:React.FocusEvent<HTMLInputElement>) => {
+    const newActiveCurrency = (event.target.nextSibling as HTMLSelectElement).value
+    const newActiveValue = adjustValue(event.target.value)
+    setActiveCurrency(newActiveCurrency)
+    setActiveValue(newActiveValue)
   }
 
 
@@ -32,23 +36,9 @@ function App() {
       </header>
       <main>
         <form>
-          <div className="currencyHolder">
-            <input type="number" name="currencyOne" id="fromValue" onChange={handleChange} />
-            <select name="fromCurrency" id="fromCurrency">
-              <option value="USD">USD</option>
-              <option value="EUR">EUR</option>
-              <option value="COP">COP</option>
-            </select>
-          </div>
-          <div className="currencyHolder">
-            <input type="number" name="currencyTwo" id="toValue" />
-            <select name="toCurrency" id="toCurrency">
-              <option value="USD">USD</option>
-              <option value="EUR">EUR</option>
-              <option value="COP">COP</option>
-            </select>
-          </div>
-          <CurrencyHolder currencyName="currencyThree" handleChange={handleChange} handleSelect={handleSelect}/>
+          <CurrencyHolder actualCurrency={activeCurrency} handleChange={handleChange} handleSelect={handleSelect} actualValue={activeValue} handleFocus={handleFocus}/>
+          <CurrencyHolder actualCurrency={activeCurrency} handleChange={handleChange} handleSelect={handleSelect} actualValue={activeValue} handleFocus={handleFocus}/>
+          <CurrencyHolder actualCurrency={activeCurrency} handleChange={handleChange} handleSelect={handleSelect} actualValue={activeValue} handleFocus={handleFocus}/>
         </form>
       </main>
       <footer>Juan David</footer>
