@@ -1,34 +1,59 @@
-import { useState } from 'react'
-import reactLogo from './assets/react.svg'
-import './App.css'
+import { useEffect, useState } from "react";
+import reactLogo from "./assets/react.svg";
+import "./App.css";
+import { CurrencyHolder } from "./components/CurrencyHolder";
+
 
 function App() {
-  const [count, setCount] = useState(0)
+  
+  const [activeInput, setActiveInput] = useState<string | null>(null)
+  const [activeValue, setActiveValue] = useState<number | null>(null)
+  
+  const handleChange = (event:React.ChangeEvent<HTMLInputElement>) => {
+    const currentElement = event.target.getAttribute('name')
+    const currentValue = parseFloat(event.target.value)
+    setActiveInput(currentElement)
+    setActiveValue(currentValue)
+    console.log(activeInput, activeValue)
+
+    useEffect
+
+  }
+  
+  const handleSelect = (e:React.ChangeEvent<HTMLSelectElement>) =>{ 
+
+  }
+
 
   return (
     <div className="App">
-      <div>
-        <a href="https://vitejs.dev" target="_blank">
-          <img src="/vite.svg" className="logo" alt="Vite logo" />
-        </a>
-        <a href="https://reactjs.org" target="_blank">
-          <img src={reactLogo} className="logo react" alt="React logo" />
-        </a>
-      </div>
-      <h1>Vite + React</h1>
-      <div className="card">
-        <button onClick={() => setCount((count) => count + 1)}>
-          count is {count}
-        </button>
-        <p>
-          Edit <code>src/App.tsx</code> and save to test HMR
-        </p>
-      </div>
-      <p className="read-the-docs">
-        Click on the Vite and React logos to learn more
-      </p>
+      <header>
+        <h1>Currency Converter</h1>
+      </header>
+      <main>
+        <form>
+          <div className="currencyHolder">
+            <input type="number" name="currencyOne" id="fromValue" onChange={handleChange} />
+            <select name="fromCurrency" id="fromCurrency">
+              <option value="USD">USD</option>
+              <option value="EUR">EUR</option>
+              <option value="COP">COP</option>
+            </select>
+          </div>
+          <div className="currencyHolder">
+            <input type="number" name="currencyTwo" id="toValue" />
+            <select name="toCurrency" id="toCurrency">
+              <option value="USD">USD</option>
+              <option value="EUR">EUR</option>
+              <option value="COP">COP</option>
+            </select>
+          </div>
+          <CurrencyHolder currencyName="currencyThree" handleChange={handleChange} handleSelect={handleSelect}/>
+        </form>
+      </main>
+      <footer>Juan David</footer>
     </div>
-  )
+  );
 }
 
-export default App
+export default App;
