@@ -1,3 +1,5 @@
+import { adjustValue } from "./adjustValues";
+
 const options = {
 	method: 'GET',
 	headers: {
@@ -6,7 +8,15 @@ const options = {
 	}
 };
 
-fetch('https://exchangerate-api.p.rapidapi.com/rapid/latest/USD', options)
-	.then(response => response.json())
-	.then(response => console.log(response))
-	.catch(err => console.error(err));
+type currencyRequest = {
+	currentValue: number,
+	fromCurrency: string,
+	toCurrency: string
+}
+
+export const convertValue = async ({currentValue, fromCurrency, toCurrency}:currencyRequest) => {
+	const response = await fetch(`https://exchangerate-api.p.rapidapi.com/rapid/latest/${fromCurrency}`, options)
+	const json = await response.json()
+	const conversionRate = json.rates[toCurrency]
+	return adjustValue(currentValue * conversionRate)
+}

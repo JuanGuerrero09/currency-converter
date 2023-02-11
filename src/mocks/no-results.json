@@ -2,5 +2,5 @@
     "result": "error",
     "documentation": "https://www.exchangerate-api.com/docs",
     "terms-of-use": "https://www.exchangerate-api.com/terms",
-    "error-type": "unsupported-code"
-}
+    "error-type": "malformed-request"
+  }
