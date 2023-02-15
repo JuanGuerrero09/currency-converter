@@ -2,32 +2,29 @@ import { useEffect, useState } from "react";
 import "./App.css";
 import { CurrencyHolder } from "./components/CurrencyHolder";
 import { adjustValue } from "./services/adjustValues";
-
-
+import { ContextCurrency } from "./context/ContextValue";
 
 function App() {
-  
+  const [activeCurrency, setActiveCurrency] = useState<string>("USD");
+  const [activeValue, setActiveValue] = useState<number>(1);
 
-  const [activeCurrency, setActiveCurrency] = useState<string>('USD')
-  const [activeValue, setActiveValue] = useState<number>(1)
-  
-  const handleChange = (event:React.ChangeEvent<HTMLInputElement>) => {
-    const currentValue = adjustValue(event.target.value)
-    setActiveValue(currentValue)
-  }
-  
-  const handleSelect = (e:React.ChangeEvent<HTMLSelectElement>) =>{ 
-    const optionSelected = e.target.value
-    setActiveCurrency(optionSelected)
-  }
+  const handleChange = (event: React.ChangeEvent<HTMLInputElement>) => {
+    const currentValue = adjustValue(event.target.value);
+    setActiveValue(currentValue);
+  };
 
-  const handleFocus = (event:React.FocusEvent<HTMLInputElement>) => {
-    const newActiveCurrency = (event.target.nextSibling as HTMLSelectElement).value
-    const newActiveValue = adjustValue(event.target.value)
-    setActiveCurrency(newActiveCurrency)
-    setActiveValue(newActiveValue)
-  }
+  const handleSelect = (e: React.ChangeEvent<HTMLSelectElement>) => {
+    const optionSelected = e.target.value;
+    setActiveCurrency(optionSelected);
+  };
 
+  const handleFocus = (event: React.FocusEvent<HTMLInputElement>) => {
+    const newActiveCurrency = (event.target.nextSibling as HTMLSelectElement)
+      .value;
+    const newActiveValue = adjustValue(event.target.value);
+    setActiveCurrency(newActiveCurrency);
+    setActiveValue(newActiveValue);
+  };
 
   return (
     <div className="App">
@@ -36,9 +33,26 @@ function App() {
       </header>
       <main>
         <form>
-          <CurrencyHolder actualCurrency={activeCurrency} handleChange={handleChange} handleSelect={handleSelect} actualValue={activeValue} handleFocus={handleFocus}/>
-          <CurrencyHolder actualCurrency={activeCurrency} handleChange={handleChange} handleSelect={handleSelect} actualValue={activeValue} handleFocus={handleFocus}/>
-          <CurrencyHolder actualCurrency={activeCurrency} handleChange={handleChange} handleSelect={handleSelect} actualValue={activeValue} handleFocus={handleFocus}/>
+          <ContextCurrency.Provider value={{
+            activeCurrency,
+            activeValue
+          }}>
+            <CurrencyHolder
+              handleChange={handleChange}
+              handleSelect={handleSelect}
+              handleFocus={handleFocus}
+            />
+            <CurrencyHolder
+              handleChange={handleChange}
+              handleSelect={handleSelect}
+              handleFocus={handleFocus}
+            />
+            <CurrencyHolder
+              handleChange={handleChange}
+              handleSelect={handleSelect}
+              handleFocus={handleFocus}
+            />
+          </ContextCurrency.Provider>
         </form>
       </main>
       <footer>Juan David</footer>
