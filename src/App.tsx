@@ -39,17 +39,14 @@ function App() {
           }}>
             <CurrencyHolder
               handleChange={handleChange}
-              handleSelect={handleSelect}
               handleFocus={handleFocus}
             />
             <CurrencyHolder
               handleChange={handleChange}
-              handleSelect={handleSelect}
               handleFocus={handleFocus}
             />
             <CurrencyHolder
               handleChange={handleChange}
-              handleSelect={handleSelect}
               handleFocus={handleFocus}
             />
           </ContextCurrency.Provider>

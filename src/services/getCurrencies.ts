@@ -1,5 +1,3 @@
-import { adjustValue } from "./adjustValues";
-
 const options = {
 	method: 'GET',
 	headers: {
@@ -18,5 +16,5 @@ export const convertValue = async ({currentValue, fromCurrency, toCurrency}:curr
 	const response = await fetch(`https://exchangerate-api.p.rapidapi.com/rapid/latest/${fromCurrency}`, options)
 	const json = await response.json()
 	const conversionRate = json.rates[toCurrency]
-	return adjustValue(currentValue * conversionRate)
+	return currentValue * conversionRate
 }

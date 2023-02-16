@@ -19,8 +19,6 @@ const getOptions = async () => {
 const allOptions = await getOptions()
 
 export function SelectOptions () {
-    //todo put favorite options first
-  const favoriteOptions = ["USD", "EUR", "COP"];
   return (
     <>
       <option value="USD">USD</option>
@@ -28,7 +26,7 @@ export function SelectOptions () {
       <option value="COP">COP</option>
       {
         allOptions.map(option => {
-            return (<option value={option}>{option}</option>)
+            return (<option key={option} value={option}>{option}</option>)
         })
       }
     </>
