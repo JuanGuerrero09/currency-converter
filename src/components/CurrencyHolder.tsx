@@ -26,13 +26,14 @@ export function CurrencyHolder({
   };
 
   return (
-    <div className="currencyHolder">
+    <form className="currencyHolder">
       <input
         type="number"
         id="fromValue"
         onChange={handleChange}
         onFocus={handleFocus}
         value={adjustValue(currentValue)}
+        className=""
       />
       <select
         name="fromCurrency"
@@ -42,6 +43,6 @@ export function CurrencyHolder({
       >
         <SelectOptions />
       </select>
-    </div>
+    </form>
   );
 }
