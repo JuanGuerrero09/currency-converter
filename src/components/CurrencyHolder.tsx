@@ -1,24 +1,12 @@
 import { SelectOptions } from "./SelectOptions";
 import { useContext } from "react";
-import { ContextCurrency } from "../context/ContextValue";
-import useCurrencies from "../hooks/useCurrencies";
 import { adjustValue } from "../services/adjustValues";
+import { CurrencyContext } from "../context/ContextValue";
+import useCurrencies from "../hooks/useCurrencies";
 
-
-type CurrencyHolderProps = {
-  handleChange: (event: React.ChangeEvent<HTMLInputElement>) => void;
-  handleFocus: (event: React.FocusEvent<HTMLInputElement>) => void;
-};
-
-export function CurrencyHolder({
-  handleChange,
-  handleFocus,
-}: CurrencyHolderProps) {
-  const { activeCurrency, activeValue } = useContext(ContextCurrency);
-  const { setCurrentCurrency, currentValue } = useCurrencies({
-    activeCurrency,
-    activeValue,
-  });
+export default function CurrencyHolder() {
+  const { handleFocus, handleChange } = useContext(CurrencyContext);
+  const { setCurrentCurrency, currentValue } = useCurrencies();
 
   const selectCurrency = (event: React.ChangeEvent<HTMLSelectElement>) => {
     const newCurrentCurrency = event.target.value;
